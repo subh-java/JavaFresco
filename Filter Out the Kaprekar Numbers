@@ -1,0 +1,36 @@
+package com.fresco;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class LambdaFn {
+    private Boolean isKaprekar(long n)
+    {
+      if (n==1) return true;
+      long sq_n = n*n;
+      int digit_count = 0;
+      while(sq_n>0) {
+        digit_count ++;
+        sq_n /=10;
+      }
+      sq_n = n*n;
+      for (int i=1; i<digit_count; i++) {
+        long eq_parts =(long) Math.pow(10,i);
+        if (eq_parts == n) continue;
+        long sum= sq_n/eq_parts + sq_n%eq_parts;
+        if(sum==n) return true;
+      }
+      return false;
+    }
+    
+    public List<Long> functionalProgramming(List<String> listOfIntegers)
+    {
+        //Write your code here
+        List<Long> outputList = listOfIntegers.stream()
+        .map(s ->Long.parseLong(s))
+        .filter(c->isKaprekar(c))
+        .collect(Collectors.toList());
+        return outputList;
+    }
+    
+}
